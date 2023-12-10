@@ -1,0 +1,14 @@
+Lancement de la Platform 
+java -cp lib\jade.jar jade.Boot –gui
+java -cp lib\jade.jar jade.Boot -gui -platform-id MyPlatform
+Lancement d’un container
+java -cp lib\jade.jar;classes jade.Boot -container -host localhost -port 1099
+Lancement d’un Agent: 
+Compilation: 
+javac –cp F:\jade\lib\jade.jar PingAgent.java
+Lancement 
+java -cp lib\jade.jar;chemin des classes jade.Boot -gui –agents AgentName:AgentClass
+Exemple: java -cp f:\jade\lib\jade.jar;. jade.Boot -gui -agents png1:examples.PingAgent.PingAgent
+
+
+comment creat and comunicater avec servises 
