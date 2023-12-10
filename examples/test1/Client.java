@@ -17,7 +17,7 @@ public class Client extends Agent {
         // Search for all available servers in the DF
         DFAgentDescription template = new DFAgentDescription();
         ServiceDescription sd = new ServiceDescription();
-        sd.setType("math-server");
+        sd.setType("word-serve");
         template.addServices(sd);
 
         try {

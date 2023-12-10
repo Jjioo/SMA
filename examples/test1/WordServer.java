@@ -5,12 +5,14 @@ import jade.core.behaviours.CyclicBehaviour;
 import jade.domain.FIPAException;
 import jade.lang.acl.ACLMessage;
 
-public class SubtractionServer extends Agent {
+public class WordServer extends Agent {
+    // Previously registered service type
+    private static final String SERVICE_TYPE = "word-serve";
 
     protected void setup() {
         // Register the service in the DF
         try {
-            registerService("math-server");
+            registerService(SERVICE_TYPE);
         } catch (FIPAException e) {
             e.printStackTrace();
         }
@@ -48,46 +50,23 @@ public class SubtractionServer extends Agent {
                     e.printStackTrace();
                 }
 
-                if (args != null && args.length >= 2) {
-                    // Perform subtraction
-                    int result = performSubtraction(args);
-
-                    // Send the result back to the ClientAgent
-                    sendResultToClient(msg.getSender(), result);
-
-                    // Additional logging
-                    System.out.println(getLocalName() + ": Received request from " + msg.getSender().getLocalName() +
-                            " to perform subtraction on " + args[0] + " and " + args[1] + ". Result: " + result);
+                if (args != null && args.length == 1) {
+                    // Reply to the client with "bye"
+                    sendResultToClient(msg.getSender(), "bye");
                 } else {
-                    System.err.println("Invalid number of arguments. Please provide at least two values for subtraction.");
+                    System.err.println("Invalid number of arguments. Please provide exactly one value.");
                 }
             } else {
                 block();
             }
         }
 
-        private void sendResultToClient(jade.core.AID clientAID, int result) {
+        private void sendResultToClient(jade.core.AID clientAID, String result) {
             // Send the result back to the ClientAgent
             ACLMessage message = new ACLMessage(ACLMessage.INFORM);
             message.addReceiver(clientAID);
-            message.setContent(String.valueOf(result));
+            message.setContent(result);
             myAgent.send(message);
-        }
-
-        private int performSubtraction(Object[] args) {
-            int result = extractOperand(args[0]);
-            for (int i = 1; i < args.length; i++) {
-                result -= extractOperand(args[i]);
-            }
-            return result;
-        }
-
-        private int extractOperand(Object arg) {
-            try {
-                return Integer.parseInt(arg.toString());
-            } catch (NumberFormatException e) {
-                throw new IllegalArgumentException("Invalid operand: " + arg);
-            }
         }
     }
 }

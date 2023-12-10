@@ -18,10 +18,7 @@ public class Main extends Agent {
 
         AgentController rmaAgentController = null;
         AgentController snifferAgentController = null;
-        AgentController server1AgentController = null;
-        AgentController server2AgentController = null;
-        AgentController server3AgentController = null;
-        AgentController server4AgentController = null;
+        AgentController WordServerController = null;    
         AgentController client1AgentController = null;
 
         try {
@@ -31,21 +28,14 @@ public class Main extends Agent {
             snifferAgentController = ac.createNewAgent("snif", "jade.tools.sniffer.Sniffer", new Object[0]);
             snifferAgentController.start();
 
-            server1AgentController = ac.createNewAgent("s1", "test1.AdditionServer", new Object[0]);
-            server1AgentController.start();
+           
 
-            server2AgentController = ac.createNewAgent("s2", "test1.SubtractionServer", new Object[0]);
-            server2AgentController.start();
-
-            server3AgentController = ac.createNewAgent("s3", "test1.MultiplicationServer", new Object[0]);
-            server3AgentController.start();
-
-            server4AgentController = ac.createNewAgent("s4", "test1.DivisionServer", new Object[0]);
-            server4AgentController.start();
+            WordServerController = ac.createNewAgent("wordServer", "test1.WordServer", new Object[0]);
+            WordServerController.start();
 
             Thread.sleep(2000);
 
-            client1AgentController = ac.createNewAgent("c1", "test1.Client", new Object[]{"15", "2"});
+            client1AgentController = ac.createNewAgent("c1", "test1.Client", new Object[]{"hey"});
             client1AgentController.start();
         } catch (StaleProxyException e) {
             e.printStackTrace();
